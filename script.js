@@ -1,18 +1,16 @@
 const button = document.getElementById('todo-button')
 const container = document.getElementById('todo-list-container')
 
-button.addEventListener('click', showItems)
+button.addEventListener('click', showItemsAsync)
 
-function showItems() {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then(response => response.json())
-        .then(json => {
-
-            console.log(json)
-            const item = document.createElement('li')
-            item.textContent = json.title
-
-            container.append(item)
-
-        })
+async function showItemsAsync() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+    const json = await response.json()
+    console.log(json)
+    for (var i = 0; i < json.length; i++) {
+        const item = document.createElement('li')
+        item.textContent = item.textContent + json[i].title
+        container.append(item)
+    }
 }
+
